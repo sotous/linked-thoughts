@@ -17,6 +17,7 @@ import UserPage from './containers/UserBlog/User.page';
 import UserPageBlogSection from './containers/UserBlog/User.BlogSection';
 import UserPageBlogSectionItem from './containers/UserBlog/User.BlogSection.Item';
 import AppBarPublic from './components/PublicAppBar/Appbar.public';
+import { DevelopElement } from './containers/develop';
 // 3rd Party Components
 import '@ui5/webcomponents/dist/Carousel';
 //
@@ -45,4 +46,5 @@ import '@ui5/webcomponents/dist/Carousel';
     UserPageBlogSectionItem
   );
   customElements.define('app-appbar-public', AppBarPublic);
+  customElements.define('app-develop', DevelopElement);
 })();

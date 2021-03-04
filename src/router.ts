@@ -61,6 +61,10 @@ export class LTRouter {
           },
         ],
       },
+      {
+        path: Routes.DevelopRoute,
+        component: 'app-develop'
+      },
       { path: '(.*)', component: 'app-error-page' },
     ]);
 

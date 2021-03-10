@@ -1,18 +1,20 @@
-import { UprtclTextField } from '@uprtcl/common-ui';
-import { Commit, EveesBaseElement, Signed } from '@uprtcl/evees';
-import { html, css, property, internalProperty, query } from 'lit-element';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
-import { head } from 'lodash';
-import { LTRouter } from '../../router';
+import { Commit, Signed } from '@uprtcl/evees';
+import { html, css, property } from 'lit-element';
 import { ConnectedElement } from '../../services/connected.element';
 import { sharedStyles } from '../../styles';
-import { GenearateReadURL } from '../../utils/routes.generator';
+import { GenearateUserDocReadURL } from '../../utils/routes.generator';
 
 import { TimestampToDate } from '../../utils/date';
 const MAX_HEIGHT = 400;
 export default class ReadOnlyPage extends ConnectedElement {
+  @property()
+  onSelection: Function;
+
   @property({ type: String })
   uref: string;
+
+  @property({ type: String })
+  userId: string;
 
   @property()
   head = null;
@@ -54,10 +56,20 @@ export default class ReadOnlyPage extends ConnectedElement {
           >
           </documents-editor>
         </div>
-        <div class="action-cont">
-          <a href=${GenearateReadURL(this.uref)} target="_blank"
-            ><div class="read-more">Read More</div></a
-          >
+        <div
+          class="action-cont clickable"
+          @click=${() => {
+            window.history.pushState(
+              {},
+              '',
+              GenearateUserDocReadURL(this.userId, this.uref)
+            );
+            this.onSelection(this.uref);
+          }}
+          }}
+        >
+          <div class="read-more">Read More</div>
+
           <hr />
         </div>
       </div>
@@ -89,7 +101,7 @@ export default class ReadOnlyPage extends ConnectedElement {
           max-width: 900px;
         }
         .timestamp {
-          margin-left: 2.5rem;
+          margin-left: 1.5rem;
           font-family: 'Poppins';
           color: #0007;
         }
@@ -102,7 +114,7 @@ export default class ReadOnlyPage extends ConnectedElement {
           z-index: 2;
         }
         .action-cont {
-          margin-left: 2.5rem;
+          margin-left: 1.5rem;
           margin-top: 1rem;
         }
         .read-more {
